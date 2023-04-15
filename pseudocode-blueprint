@@ -1,0 +1,29 @@
+# Install Whisper and dependencies
+sudo apt update
+sudo apt install git ffmpeg python3-pip
+pip install git+https://github.com/openai/whisper.git
+
+# Set PATH/TO/INPUT
+# Set PATH/TO/OUTPUT
+# Set LANGUAGE
+# Set THEADNUMBER
+
+~/.local/bin/whisper --model large-v2 --output_dir PATH/TO/OUTPUT --output_format vtt --task transcribe --language LANGUAGE --threads THREADNUMBER PATH/TO/INPUT
+
+
+#-------------------------------
+#Probably better to call a Python script rather than using Bash for this part
+
+# Split VTT for translation
+awk 'NR % 3 == 1' PATH/TO/OUTPUT.vtt > PATH/TO/OUTPUT/transcription.txt # First line will be "WEBVTT"
+awk 'NR % 3 == 0' PATH/TO/OUTPUT.vtt > PATH/TO/OUTPUT/timestamps.txt
+
+# Transcription has to be fed through a translator (Google only takes .docx, .pdf, .pptx and .xlsx).
+
+# Merging timestamps and translated transcription, including empty lines and the "WEBVTT" header
+
+#------------------------------
+
+
+# Burn subtitles into video
+ffmpeg -i INPUTFILE -vf subtitles=translated_subtitles.vtt output.mp4
