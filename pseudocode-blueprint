@@ -26,4 +26,4 @@ awk 'NR % 3 == 0' PATH/TO/OUTPUT.vtt > PATH/TO/OUTPUT/timestamps.txt
 
 
 # Burn subtitles into video
-ffmpeg -i INPUTFILE -vf subtitles=translated_subtitles.vtt output.mp4
+ffmpeg -i PATH/TO/INPUT -vf subtitles=PATH/TO/OUTPUT/subtitles.vtt PATH/TO/OUTPUT
