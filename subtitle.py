@@ -6,7 +6,7 @@ from googletrans import Translator
 def split(inputfile,transcriptionfile):
 	
 	# Open inputfile and create transcriptionfile
-	inputf = open(inputfile,"r")
+	inputf = open(inputfile,"r").read()
 	transcription = open(transcriptionfile,"w+")
 	
 	# Sort the lines from the inputfile into a list of timestamps and file with speech-to-text transcriptions
@@ -24,9 +24,9 @@ def split(inputfile,transcriptionfile):
 	if len(timestamps) == len(transcription.read()):
 		print("Pre-translation check passed: Number of timestamps and number of lines match")
 	elif len(timestamps) > len(transcription.read()):
-		print("WARNING! Pre-translation check failed: Number of timestamps exceeds number of lines")
+		print("WARNING! Pre-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(transcription.read())))
 	elif len(timestamps) < len(transcription.read()):
-		print("WARNING! Pre-translation check failed: Number of lines exceeds number of timestamps")	
+		print("WARNING! Pre-translation check failed: Number of lines exceeds number of timestamps by "+str(len(transcription.read())-len(timestamps)))	
 	
 	# Close inputfile and save transcriptionfile
 	inputf.close()
@@ -39,11 +39,11 @@ def split(inputfile,transcriptionfile):
 def translate(language,transcriptionfile,translationfile):
 	
 	# Open transcriptionfile and create translationfile
-	transcription = open(transcriptionfile,"r")
+	transcription = open(transcriptionfile,"r").read()
 	translation = open(translationfile,"w")
 	
 	# The blackbox where all the magic happens
-	translation.write(Translator().translate(transcription.read(), src=language, dest=en).text)
+	translation.write(Translator().translate(transcription, src=language, dest="en").text)
 	
 	# Close transcriptionfile and save translationfile
 	transcription.close()
@@ -56,7 +56,7 @@ def translate(language,transcriptionfile,translationfile):
 def merge(timestamps,translationfile,outputfile):
 	
 	# Open translationfile and create outputfile
-	translation = open(translationfile,"r")
+	translation = open(translationfile,"r").read()
 	output = open(outputfile,"w")
 	
 	# Write format header and empty line to output
@@ -67,9 +67,9 @@ def merge(timestamps,translationfile,outputfile):
 	if len(timestamps) == len(translation):
 		print("Post-translation check passed: Number of timestamps and number of lines match")
 	elif len(timestamps) > len(translation):
-		print("WARNING! Post-translation check failed: Number of timestamps exceeds number of lines")
+		print("WARNING! Post-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(translation)))
 	elif len(timestamps) < len(translation):
-		print("WARNING! Post-translation check failed: Number of lines exceeds number of timestamps")
+		print("WARNING! Post-translation check failed: Number of lines exceeds number of timestamps by "+str(len(translation)-len(timestamps)))
 	
 	# Merge timestamps and translation, including empty lines
 	for line in range(len(timestamps)):
