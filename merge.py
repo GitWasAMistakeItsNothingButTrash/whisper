@@ -1,12 +1,13 @@
 from sys import argv
 from docx import Document
 
+
 outputfile = str(argv[1])+str(argv[2])+".vtt"
 timestampfile = str(argv[1])+"timestamps.docx"
 translationfile = str(argv[1])+"translation.docx"
 
 
-# Open translationfile and create outputfile
+# Create outputfile and open timestampfile & translationfile
 output = open(outputfile,"w")
 timestamps = Document(timestampfile)
 translation = Document(translationfile)
@@ -14,6 +15,15 @@ translation = Document(translationfile)
 # Write format header and empty line to output
 output.write("WEBVTT")
 output.write("\n")
+
+
+# Check that the number of timestamps matches the number of lines post-translation
+if len(timestamps.paragraphs) == len(translation.paragraphs):
+	print("Post-translation check passed: Number of timestamps and number of lines match")
+else:
+	print("WARNING! Post-translation check failed: Number of timestamps and number of lines do NOT match")
+	print("Number of timestamps: "+str(len(timestamps.paragraphs)))
+	print("Number of lines: "+str(len(translation.paragraphs)))
 
 
 # Merge timestamps and translation, including empty lines
