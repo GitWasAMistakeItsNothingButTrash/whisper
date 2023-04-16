@@ -64,11 +64,11 @@ def merge(timestamps,translationfile,outputfile):
 	output.write("\n")
 	
 	# Check that the number of timestamps matches the number of lines post-translation
-	if len(timestamps) == len(translation):
+	if len(timestamps) == len(translation.read()):
 		print("Post-translation check passed: Number of timestamps and number of lines match")
-	elif len(timestamps) > len(translation):
+	elif len(timestamps) > len(translation.read()):
 		print("WARNING! Post-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(translation.read())))
-	elif len(timestamps) < len(translation):
+	elif len(timestamps) < len(translation.read()):
 		print("WARNING! Post-translation check failed: Number of lines exceeds number of timestamps by "+str(len(translation.read())-len(timestamps)))
 	
 	# Merge timestamps and translation, including empty lines
