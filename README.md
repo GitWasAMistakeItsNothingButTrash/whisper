@@ -11,5 +11,3 @@ But this can easily take some twelve hours per hour of audio.
 A somewhat lower quality but much faster solution, would be to split timestamps and transcription line-by-line, then pass the transcription without interspersed timestamps through Google Translate, and finally merge the timestamps and translation again line-by-line, since this process can be automized.
 
 [The first approach](https://github.com/GitWasAMistakeItsNothingButTrash/whisper/tree/approach1) is to install and run Whisper using a bash script; split, translate and merge the output in python using a [Google Translate library](https://pypi.org/project/googletrans/); then burn those subtitles into a copy of the original file using bash again.
-
-[The second approach](https://github.com/GitWasAMistakeItsNothingButTrash/whisper/tree/approach2) is to install and run Whisper using a bash script, split the transcript from the timestamps with python, use the [Google Translate website](https://translate.google.com/?op=docs) to translate, merge the translation with the timestamps using python again, then burn those subtitles into a copy of the original file with bash.
