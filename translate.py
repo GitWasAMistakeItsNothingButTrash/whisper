@@ -1,3 +1,4 @@
+from sys import argv
 from googletrans import Translator
 
 
@@ -84,26 +85,15 @@ def merge(timestamps,translationfile,outputfile):
 
 
 
-print("Please enter the absolute path to Whisper's speech-to-text transcription: ")
-inputfile = raw_input("")
+inputfile = str(sys.argv[1])+"/"+str(sys.argv[2])+".vtt"
+transcriptionfile = str(sys.argv[1])+"/"+"transcription.tmp"
+translationtionfile = str(sys.argv[1])+"/"+"translation.tmp"
+outputfile =  str(sys.argv[1])+"/"+str(sys.argv[3])+".vtt"
 
-print("What language is it in? ")
-inputlanguage = raw_input("")
-
-print("And what language do you want to translate it to? ")
+inputlanguage = str(sys.argv[4])
+print("What language do you want to translate into? ")
 outputlanguage = raw_input("")
 
-print("Please enter the absolute path at which to save the raw transcription (untranslated and without timestamps): ")
-transcriptionfile = raw_input("")
-
-print("Please enter the absolute path at which to save the raw translation (without timestamps): ")
-translationtionfile = raw_input("")
-
-print ("Please enter the absolute path at which to save the final product (translated subtitles including timestamps): ")
-outputfile = raw_input("")
-
 timestamps = split(inputfile,transcriptionfile)
-
 translate(inputlanguage,outputlanguage,transcriptionfile,translationfile)
-
 merge(timestamps,translationfile,outputfile)
