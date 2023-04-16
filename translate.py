@@ -91,8 +91,7 @@ translationtionfile = str(sys.argv[1])+"/"+"translation.tmp"
 outputfile =  str(sys.argv[1])+"/"+str(sys.argv[3])+".vtt"
 
 inputlanguage = str(sys.argv[4])
-print("What language do you want to translate into? ")
-outputlanguage = raw_input("")
+outputlanguage = "en"
 
 timestamps = split(inputfile,transcriptionfile)
 translate(inputlanguage,outputlanguage,transcriptionfile,translationfile)
