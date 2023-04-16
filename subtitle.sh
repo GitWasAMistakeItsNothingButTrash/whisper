@@ -17,7 +17,7 @@ read -p "How many CPU threads can Whisper use? " threadnumber
 ~/.local/bin/whisper --model large-v2 --output_dir $path2dir --output_format vtt --task transcribe --language $language --threads $threadnumber $path2dir/$inputfile.mp4
 
 # Translate subtitles
-python3 generate_english_subtitles.py $path2dir $inputfile $outputfile $language
+python3 subtitle.py $path2dir $inputfile $outputfile $language
 rm -f $path2dir/$transcription.tmp
 rm -f $path2dir/$translation.tmp
 
