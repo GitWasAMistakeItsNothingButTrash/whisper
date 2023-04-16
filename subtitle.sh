@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Install requisites
 sudo apt update
 sudo apt install git ffmpeg python3-pip
@@ -15,7 +17,9 @@ read -p "How many CPU threads can Whisper use? " threadnumber
 ~/.local/bin/whisper --model large-v2 --output_dir $path2dir --output_format vtt --task transcribe --language $transcriptionlanguage --threads $threadnumber $path2dir/$inputfile.mp4
 
 # Translate subtitles
-python3 translate.py $path2dir $inputfile $outputfile $transcriptionlanguage
+python3 generate_english_subtitles.py $path2dir $inputfile $outputfile $transcriptionlanguage
+rm -f $path2dir/$transcription.tmp
+rm -f $path2dir/$translation.tmp
 
 # Burn subtitles into video
 ffmpeg -i $path2dir/$inputfile.mp4 -vf subtitles=$path2dir/$outputfile.vtt $path2dir/$outputfile.mp4
