@@ -36,14 +36,14 @@ def split(inputfile,transcriptionfile):
 
 
 
-def translate(inputlanguage,transcriptionfile,translationfile):
+def translate(language,transcriptionfile,translationfile):
 	
 	# Open transcriptionfile and create translationfile
 	transcription = open(transcriptionfile,"r")
 	translation = open(translationfile,"w")
 	
 	# The blackbox where all the magic happens
-	translation.write(Translator().translate(transcription.read(), src=inputlanguage, dest=en).text)
+	translation.write(Translator().translate(transcription.read(), src=language, dest=en).text)
 	
 	# Close transcriptionfile and save translationfile
 	transcription.close()
@@ -89,8 +89,8 @@ inputfile = str(sys.argv[1])+"/"+str(sys.argv[2])+".vtt"
 transcriptionfile = str(sys.argv[1])+"/"+"transcription.tmp"
 translationtionfile = str(sys.argv[1])+"/"+"translation.tmp"
 outputfile =  str(sys.argv[1])+"/"+str(sys.argv[3])+".vtt"
-inputlanguage = str(sys.argv[4])
+language = str(sys.argv[4])
 
 timestamps = split(inputfile,transcriptionfile)
-translate(inputlanguage,transcriptionfile,translationfile)
+translate(language,transcriptionfile,translationfile)
 merge(timestamps,translationfile,outputfile)
