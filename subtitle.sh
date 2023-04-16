@@ -18,8 +18,8 @@ read -p "How many CPU threads can Whisper use? (Do not exceed total threads):" t
 
 # Translate subtitles
 python3 $( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )/subtitle.py "$path2dir" "$inputfile" "$outputfile" "$language"
-rm -f "$path2dir$transcription.tmp"
-rm -f "$path2dir$translation.tmp"
+rm -f "$path2dir"transcription.tmp
+rm -f "$path2dir"translation.tmp
 
 # Burn subtitles into video
 ffmpeg -i "$path2dir$inputfile.mp4" -vf subtitles="$path2dir$outputfile.vtt" "$path2dir$outputfile.mp4"
