@@ -7,7 +7,7 @@ def split(inputfile,transcriptionfile):
 	
 	# Open inputfile and create transcriptionfile
 	inputf = open(inputfile,"r")
-	transcription = open(transcriptionfile,"w")
+	transcription = open(transcriptionfile,"w+")
 	
 	# Sort the lines from the inputfile into a list of timestamps and file with speech-to-text transcriptions
 	timestamps = []
