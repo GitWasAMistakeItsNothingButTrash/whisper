@@ -16,7 +16,7 @@ def split(inputfile,transcriptionfile):
 		if linecount%3==0:
 			timestamps.append(str(line))
 		elif (linecount-1)%3==0:
-			if linecount != 0: # Skip the first line "WEBVTT"
+			if linecount != 1: # Skip the first line "WEBVTT"
 				transcription.write(str(line))
 		linecount += 1
 		
