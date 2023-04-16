@@ -25,9 +25,9 @@ python3 $( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )/split.py "$path2dir" "
 python3 $( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )/merge.py "$path2dir" "$outputfile"
 
 # Clean up temporary files
-rm -f "$path2dir$timestamps.docx"
-rm -f "$path2dir$transcription.docx"
-rm -f "$path2dir$translation.docx"
+rm -f "$path2dir"timestamps.docx
+rm -f "$path2dir"transcription.docx
+rm -f "$path2dir"translation.docx
 
 # Burn subtitles into video
 ffmpeg -i "$path2dir$inputfile.mp4" -vf subtitles="$path2dir$outputfile.vtt" "$path2dir$outputfile.mp4"
