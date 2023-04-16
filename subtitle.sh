@@ -37,8 +37,8 @@ rm -f "$path2dir"translation.tmp
 gawk -i inplace ' {print;} NR % 2 == 0 { print ""; }' "$path2dir$outputfile.vtt"
 
 # Restore header
-gawk -i inplace 'NR == 1 { print "WEBVTT"; }' "$path2dir$outputfile.vtt"
-gawk -i inplace 'NR == 2 { print ""; }' "$path2dir$outputfile.vtt"
+gawk -i inplace 'NR == 1 {$0="WEBVTT"RS$0}7' "$path2dir$outputfile.vtt"
+gawk -i inplace 'NR == 2 {$0=""RS$0}7' "$path2dir$outputfile.vtt"
 
 # Burn subtitles into video
 ffmpeg -i "$path2dir$inputfile.mp4" -vf subtitles="$path2dir$outputfile.vtt" "$path2dir$outputfile.mp4"
