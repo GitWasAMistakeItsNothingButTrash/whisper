@@ -6,13 +6,14 @@ from googletrans import Translator
 def split(inputfile,transcriptionfile):
 	
 	# Open inputfile and create transcriptionfile
-	inputf = open(inputfile,"r").read()
+	inputf = open(inputfile,"r")
+	inputc = inputf.read()
 	transcription = open(transcriptionfile,"w+")
 	
 	# Sort the lines from the inputfile into a list of timestamps and file with speech-to-text transcriptions
 	timestamps = []
 	linecount = 1
-	for line in inputf:
+	for line in inputc:
 		if linecount%3==0:
 			timestamps.append(str(line))
 		elif (linecount-1)%3==0:
@@ -39,14 +40,15 @@ def split(inputfile,transcriptionfile):
 def translate(language,transcriptionfile,translationfile):
 	
 	# Open transcriptionfile and create translationfile
-	transcription = open(transcriptionfile,"r").read()
+	transcriptionf = open(transcriptionfile,"r")
+	transcriptionc = transcriptionf.read()
 	translation = open(translationfile,"w")
 	
 	# The blackbox where all the magic happens
-	translation.write(Translator().translate(transcription, src=language, dest="en").text)
+	translation.write(Translator().translate(transcriptionc, src=language, dest="en").text)
 	
 	# Close transcriptionfile and save translationfile
-	transcription.close()
+	transcriptionf.close()
 	translation.close()
 	
 	return None
@@ -56,7 +58,8 @@ def translate(language,transcriptionfile,translationfile):
 def merge(timestamps,translationfile,outputfile):
 	
 	# Open translationfile and create outputfile
-	translation = open(translationfile,"r").read()
+	translationf = open(translationfile,"r")
+	translationc = translationf.read()
 	output = open(outputfile,"w")
 	
 	# Write format header and empty line to output
@@ -78,7 +81,7 @@ def merge(timestamps,translationfile,outputfile):
 		output.write("\n")
 	
 	# Close translationfile and save outputfile
-	translation.close()
+	translationf.close()
 	output.close()
 	
 	return None
