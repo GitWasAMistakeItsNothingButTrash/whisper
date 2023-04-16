@@ -19,8 +19,8 @@ read -p "How many CPU threads can Whisper use? (Do not exceed total threads):" t
 gawk -i inplace 'NR > 2' "$path2dir$inputfile.vtt"
 
 # Split timestamps and transcription
-gawk -i inplace 'NR % 3 == 1' "$path2dir$inputfile.vtt" > "$path2dir"timestamps.tmp
-gawk -i inplace 'NR % 3 == 2' "$path2dir$inputfile.vtt" > "$path2dir"transcription.tmp
+awk 'NR % 3 == 1' "$path2dir$inputfile.vtt" > "$path2dir"timestamps.tmp
+awk 'NR % 3 == 2' "$path2dir$inputfile.vtt" > "$path2dir"transcription.tmp
 
 # Translate transcription
 "$path2dir"transcription.tmp --> "$path2dir"translation.tmp
