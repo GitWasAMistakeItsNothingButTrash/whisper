@@ -21,11 +21,11 @@ def split(inputfile,transcriptionfile):
 		linecount += 1
 	
 	# Check that the number of timestamps matches the number of lines pre-translation
-	if len(timestamps) == len(transcription):
+	if len(timestamps) == len(transcription.read()):
 		print("Pre-translation check passed: Number of timestamps and number of lines match")
-	elif len(timestamps) > len(transcription):
+	elif len(timestamps) > len(transcription.read()):
 		print("WARNING! Pre-translation check failed: Number of timestamps exceeds number of lines")
-	elif len(timestamps) < len(transcription):
+	elif len(timestamps) < len(transcription.read()):
 		print("WARNING! Pre-translation check failed: Number of lines exceeds number of timestamps")	
 	
 	# Close inputfile and save transcriptionfile
@@ -87,7 +87,7 @@ def merge(timestamps,translationfile,outputfile):
 
 inputfile = str(argv[1])+str(argv[2])+".vtt"
 transcriptionfile = str(argv[1])+"transcription.tmp"
-translationtionfile = str(argv[1])+"translation.tmp"
+translationfile = str(argv[1])+"translation.tmp"
 outputfile = str(argv[1])+str(argv[3])+".vtt"
 language = str(argv[4])
 
