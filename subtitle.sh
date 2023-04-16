@@ -4,7 +4,7 @@
 sudo apt update
 sudo apt install git ffmpeg python3-pip
 pip install git+https://github.com/openai/whisper.git
-pip install googletrans
+pip install python-docx
 
 # Define variables
 read -p "Please enter the absolute path to the directory (include a slash at the end): " path2dir
