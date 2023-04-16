@@ -7,13 +7,12 @@ def split(inputfile,transcriptionfile):
 	
 	# Open inputfile and create transcriptionfile
 	inputf = open(inputfile,"r")
-	inputc = inputf.read()
 	transcription = open(transcriptionfile,"w+")
 	
 	# Sort the lines from the inputfile into a list of timestamps and file with speech-to-text transcriptions
 	timestamps = []
 	linecount = 1
-	for line in inputc:
+	for line in inputf:
 		if linecount%3==0:
 			timestamps.append(str(line))
 		elif (linecount-1)%3==0:
@@ -40,15 +39,14 @@ def split(inputfile,transcriptionfile):
 def translate(language,transcriptionfile,translationfile):
 	
 	# Open transcriptionfile and create translationfile
-	transcriptionf = open(transcriptionfile,"r")
-	transcriptionc = transcriptionf.read()
+	transcription = open(transcriptionfile,"r")
 	translation = open(translationfile,"w")
 	
 	# The blackbox where all the magic happens
-	translation.write(Translator().translate(transcriptionc, src=language, dest="en").text)
+	translation.write(Translator().translate(transcription, src=language, dest="en").text)
 	
 	# Close transcriptionfile and save translationfile
-	transcriptionf.close()
+	transcription.close()
 	translation.close()
 	
 	return None
@@ -58,8 +56,7 @@ def translate(language,transcriptionfile,translationfile):
 def merge(timestamps,translationfile,outputfile):
 	
 	# Open translationfile and create outputfile
-	translationf = open(translationfile,"r")
-	translationc = translationf.read()
+	translation = open(translationfile,"r")
 	output = open(outputfile,"w")
 	
 	# Write format header and empty line to output
@@ -70,9 +67,9 @@ def merge(timestamps,translationfile,outputfile):
 	if len(timestamps) == len(translation):
 		print("Post-translation check passed: Number of timestamps and number of lines match")
 	elif len(timestamps) > len(translation):
-		print("WARNING! Post-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(translation)))
+		print("WARNING! Post-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(translation.read())))
 	elif len(timestamps) < len(translation):
-		print("WARNING! Post-translation check failed: Number of lines exceeds number of timestamps by "+str(len(translation)-len(timestamps)))
+		print("WARNING! Post-translation check failed: Number of lines exceeds number of timestamps by "+str(len(translation.read())-len(timestamps)))
 	
 	# Merge timestamps and translation, including empty lines
 	for line in range(len(timestamps)):
@@ -81,7 +78,7 @@ def merge(timestamps,translationfile,outputfile):
 		output.write("\n")
 	
 	# Close translationfile and save outputfile
-	translationf.close()
+	translation.close()
 	output.close()
 	
 	return None
