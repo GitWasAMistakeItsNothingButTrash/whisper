@@ -22,8 +22,7 @@ gawk -i inplace 'NR > 2' "$path2dir$inputfile.vtt"
 awk 'NR % 3 == 1' "$path2dir$inputfile.vtt" > "$path2dir"timestamps.tmp
 awk 'NR % 3 == 2' "$path2dir$inputfile.vtt" > "$path2dir"transcription.tmp
 
-# Translate transcription
-"$path2dir"transcription.tmp --> "$path2dir"translation.tmp
+# Translate "$path2dir"transcription.tmp into "$path2dir"translation.tmp
 
 # Merge timestamps and translation
 paste -d \\n "$path2dir"timestamps.tmp "$path2dir"translation.tmp > "$path2dir$outputfile.vtt" 
