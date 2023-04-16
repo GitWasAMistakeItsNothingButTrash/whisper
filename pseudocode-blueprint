@@ -1,29 +1,21 @@
-# Install Whisper and dependencies
+# Install requisites
 sudo apt update
 sudo apt install git ffmpeg python3-pip
 pip install git+https://github.com/openai/whisper.git
+pip install googletrans
 
-# Set PATH/TO/INPUT
-# Set PATH/TO/OUTPUT
-# Set LANGUAGE
-# Set THEADNUMBER
+# Define variables
+read -p "Please enter the absolute path to the directory: " path2dir
+read -p "Please specify the name of the input file (without .mp4): " inputfile
+read -p "What language is the input file in? " transcriptionlanguage
+read -p "Please specify a name for the output files (without file-extensions): " outputfile
+read -p "How many CPU threads can Whisper use? " threadnumber
 
-~/.local/bin/whisper --model large-v2 --output_dir PATH/TO/OUTPUT --output_format vtt --task transcribe --language LANGUAGE --threads THREADNUMBER PATH/TO/INPUT
+# Speech-to-text transcription
+~/.local/bin/whisper --model large-v2 --output_dir $path2dir --output_format vtt --task transcribe --language $transcriptionlanguage --threads $threadnumber $path2dir/$inputfile.mp4
 
-
-#-------------------------------
-#Probably better to call a Python script rather than using Bash for this part
-
-# Split VTT for translation
-awk 'NR % 3 == 1' PATH/TO/OUTPUT.vtt > PATH/TO/OUTPUT/transcription.txt # First line will be "WEBVTT"
-awk 'NR % 3 == 0' PATH/TO/OUTPUT.vtt > PATH/TO/OUTPUT/timestamps.txt
-
-# Transcription has to be fed through a translator (Google only takes .docx, .pdf, .pptx and .xlsx).
-
-# Merging timestamps and translated transcription, including empty lines and the "WEBVTT" header
-
-#------------------------------
-
+# Translate subtitles
+python3 translate.py $path2dir $outputfile $transcriptionlanguage
 
 # Burn subtitles into video
-ffmpeg -i PATH/TO/INPUT -vf subtitles=PATH/TO/OUTPUT/subtitles.vtt PATH/TO/OUTPUT
+ffmpeg -i $path2dir/$inputfile.mp4 -vf subtitles=$path2dir/$outputfile.vtt $path2dir/$outputfile.mp4
