@@ -7,11 +7,11 @@ pip install git+https://github.com/openai/whisper.git
 pip install googletrans
 
 # Define variables
-read -p "Please enter the absolute path to the directory: " path2dir
+read -p "Please enter the absolute path to the directory (without slash at the end): " path2dir
 read -p "Please specify the name of the input file (without .mp4): " inputfile
-read -p "What language is the input file in? " language
+read -p "What language is the input file in? (Two letter abbreviation): " language
 read -p "Please specify a name for the output files (without file-extensions): " outputfile
-read -p "How many CPU threads can Whisper use? " threadnumber
+read -p "How many CPU threads can Whisper use? (Do not exceed total threads):" threadnumber
 
 # Speech-to-text transcription
 ~/.local/bin/whisper --model large-v2 --output_dir $path2dir --output_format vtt --task transcribe --language $language --threads $threadnumber $path2dir/$inputfile.mp4
