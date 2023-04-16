@@ -16,10 +16,18 @@ read -p "How many CPU threads can Whisper use? (Do not exceed total threads):" t
 # Speech-to-text transcription
 ~/.local/bin/whisper --model large-v2 --output_dir "$path2dir" --output_format vtt --task transcribe --language $language --threads $threadnumber "$path2dir$inputfile.mp4"
 
-# Translate subtitles
-python3 $( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )/subtitle.py "$path2dir" "$inputfile" "$outputfile" "$language"
-rm -f "$path2dir$transcription.tmp"
-rm -f "$path2dir$translation.tmp"
+# Split timestamps and transcription
+python3 $( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )/split.py "$path2dir" "$inputfile"
+
+# Translate transcription
+
+# Merge timestamps and translation
+python3 $( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )/merge.py "$path2dir" "$outputfile"
+
+# Clean up temporary files
+rm -f "$path2dir$timestamps.docx"
+rm -f "$path2dir$transcription.docx"
+rm -f "$path2dir$translation.docx"
 
 # Burn subtitles into video
 ffmpeg -i "$path2dir$inputfile.mp4" -vf subtitles="$path2dir$outputfile.vtt" "$path2dir$outputfile.mp4"
