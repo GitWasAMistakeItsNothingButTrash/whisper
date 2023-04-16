@@ -7,7 +7,7 @@ def split(inputfile,transcriptionfile):
 	
 	# Open inputfile and create transcriptionfile
 	inputf = open(inputfile,"r")
-	transcription = open(transcriptionfile,"w+")
+	transcription = open(transcriptionfile,"w")
 	
 	# Sort the lines from the inputfile into a list of timestamps and file with speech-to-text transcriptions
 	timestamps = []
@@ -19,15 +19,7 @@ def split(inputfile,transcriptionfile):
 			if linecount != 0: # Skip the first line "WEBVTT"
 				transcription.write(str(line))
 		linecount += 1
-	
-	# Check that the number of timestamps matches the number of lines pre-translation
-	if len(timestamps) == len(transcription.read()):
-		print("Pre-translation check passed: Number of timestamps and number of lines match")
-	elif len(timestamps) > len(transcription.read()):
-		print("WARNING! Pre-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(transcription.read())))
-	elif len(timestamps) < len(transcription.read()):
-		print("WARNING! Pre-translation check failed: Number of lines exceeds number of timestamps by "+str(len(transcription.read())-len(timestamps)))	
-	
+		
 	# Close inputfile and save transcriptionfile
 	inputf.close()
 	transcription.close()
@@ -36,11 +28,20 @@ def split(inputfile,transcriptionfile):
 
 
 
-def translate(language,transcriptionfile,translationfile):
+def translate(language,transcriptionfile,translationfile,timestamps):
 	
 	# Open transcriptionfile and create translationfile
 	transcription = open(transcriptionfile,"r")
 	translation = open(translationfile,"w")
+	
+	# Check that the number of timestamps matches the number of lines pre-translation
+	if len(timestamps) == len(transcription.read()):
+		print("Pre-translation check passed: Number of timestamps and number of lines match")
+	elif len(timestamps) > len(transcription.read()):
+		print("WARNING! Pre-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(transcription.read())))
+	elif len(timestamps) < len(transcription.read()):
+		print("WARNING! Pre-translation check failed: Number of lines exceeds number of timestamps by "+str(len(transcription.read())-len(timestamps)))	
+
 	
 	# The blackbox where all the magic happens
 	translation.write(Translator().translate(transcription, src=language, dest="en").text)
@@ -92,5 +93,5 @@ outputfile = str(argv[1])+str(argv[3])+".vtt"
 language = str(argv[4])
 
 timestamps = split(inputfile,transcriptionfile)
-translate(language,transcriptionfile,translationfile)
+translate(language,transcriptionfile,translationfile,timestamps)
 merge(timestamps,translationfile,outputfile)
