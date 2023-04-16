@@ -74,7 +74,7 @@ def merge(timestamps,translationfile,outputfile):
 	# Merge timestamps and translation, including empty lines
 	for line in range(len(timestamps)):
 		output.write(str(timestamps[line]))
-		output.write(str(translation[line]))
+		output.write(str(translation.read()[line]))
 		output.write("\n")
 	
 	# Close translationfile and save outputfile
