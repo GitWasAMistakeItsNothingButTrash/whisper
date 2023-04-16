@@ -6,7 +6,7 @@ from googletrans import Translator
 def split(inputfile,transcriptionfile):
 	
 	# Open inputfile and create transcriptionfile
-	inputf = open(inputfile,"r")
+	inputf = open(inputfile,"r").read()
 	transcription = open(transcriptionfile,"w")
 	
 	# Sort the lines from the inputfile into a list of timestamps and file with speech-to-text transcriptions
@@ -21,11 +21,11 @@ def split(inputfile,transcriptionfile):
 		linecount += 1
 	
 	# Check that the number of timestamps matches the number of lines pre-translation
-	if len(timestamps) == len(transcription):
+	if len(timestamps) == len(transcription.read()):
 		print("Pre-translation check passed: Number of timestamps and number of lines match")
-	elif len(timestamps) > len(transcription):
+	elif len(timestamps) > len(transcription.read()):
 		print("WARNING! Pre-translation check failed: Number of timestamps exceeds number of lines")
-	elif len(timestamps) < len(transcription):
+	elif len(timestamps) < len(transcription.read()):
 		print("WARNING! Pre-translation check failed: Number of lines exceeds number of timestamps")	
 	
 	# Close inputfile and save transcriptionfile
@@ -39,11 +39,11 @@ def split(inputfile,transcriptionfile):
 def translate(language,transcriptionfile,translationfile):
 	
 	# Open transcriptionfile and create translationfile
-	transcription = open(transcriptionfile,"r")
+	transcription = open(transcriptionfile,"r").read()
 	translation = open(translationfile,"w")
 	
 	# The blackbox where all the magic happens
-	translation.write(Translator().translate(transcription.read(), src=language, dest=en).text)
+	translation.write(Translator().translate(transcription, src=language, dest=en).text)
 	
 	# Close transcriptionfile and save translationfile
 	transcription.close()
@@ -56,7 +56,7 @@ def translate(language,transcriptionfile,translationfile):
 def merge(timestamps,translationfile,outputfile):
 	
 	# Open translationfile and create outputfile
-	translation = open(translationfile,"r")
+	translation = open(translationfile,"r").read()
 	output = open(outputfile,"w")
 	
 	# Write format header and empty line to output
