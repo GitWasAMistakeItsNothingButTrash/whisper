@@ -36,6 +36,7 @@ def split(inputfile,transcriptionfile):
 
 
 def translate(inputlanguage,outputlanguage,transcriptionfile,translationfile):
+	
 	# Open transcriptionfile and create translationfile
 	transcription = open(transcriptionfile,"r")
 	translation = open(translationfile,"w")
