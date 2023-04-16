@@ -37,11 +37,10 @@ def translate(language,transcriptionfile,translationfile,timestamps):
 	# Check that the number of timestamps matches the number of lines pre-translation
 	if len(timestamps) == len(transcription.read()):
 		print("Pre-translation check passed: Number of timestamps and number of lines match")
-	elif len(timestamps) > len(transcription.read()):
-		print("WARNING! Pre-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(transcription.read())))
-	elif len(timestamps) < len(transcription.read()):
-		print("WARNING! Pre-translation check failed: Number of lines exceeds number of timestamps by "+str(len(transcription.read())-len(timestamps)))	
-
+	else:
+		print("WARNING! Pre-translation check failed: Number of timestamps and number of lines do NOT match")
+		print("Number of timestamps: "+str(len(timestamps)))
+		print("Number of lines: "+str(len(transcription.read())))
 	
 	# The blackbox where all the magic happens
 	translation.write(Translator().translate(transcription, src=language, dest="en").text)
@@ -67,10 +66,10 @@ def merge(timestamps,translationfile,outputfile):
 	# Check that the number of timestamps matches the number of lines post-translation
 	if len(timestamps) == len(translation.read()):
 		print("Post-translation check passed: Number of timestamps and number of lines match")
-	elif len(timestamps) > len(translation.read()):
-		print("WARNING! Post-translation check failed: Number of timestamps exceeds number of lines by "+str(len(timestamps)-len(translation.read())))
-	elif len(timestamps) < len(translation.read()):
-		print("WARNING! Post-translation check failed: Number of lines exceeds number of timestamps by "+str(len(translation.read())-len(timestamps)))
+	else:
+		print("WARNING! Post-translation check failed: Number of timestamps and number of lines do NOT match")
+		print("Number of timestamps: "+str(len(timestamps)))
+		print("Number of lines: "+str(len(translation.read())))
 	
 	# Merge timestamps and translation, including empty lines
 	for line in range(len(timestamps)):
