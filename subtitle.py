@@ -88,7 +88,7 @@ def merge(timestamps,translationfile,outputfile):
 inputfile = str(argv[1])+str(argv[2])+".vtt"
 transcriptionfile = str(argv[1])+"transcription.tmp"
 translationtionfile = str(argv[1])+"translation.tmp"
-outputfile =  str(argv[1])+str(argv[3])+".vtt"
+outputfile = str(argv[1])+str(argv[3])+".vtt"
 language = str(argv[4])
 
 timestamps = split(inputfile,transcriptionfile)
