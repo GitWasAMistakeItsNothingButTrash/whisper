@@ -14,4 +14,4 @@ A somewhat lower quality but much faster solution, would be to split timestamps 
 
 [The second approach](https://github.com/GitWasAMistakeItsNothingButTrash/whisper/tree/approach2) is to install and run Whisper using a bash script, split the transcript from the timestamps with python, use the [Google Translate website](https://translate.google.com/?op=docs) to translate, merge the translation with the timestamps using python again, then burn those subtitles into a copy of the original file with bash.
 
-[The third approach](https://github.com/GitWasAMistakeItsNothingButTrash/whisper/tree/approach3) is the same as the second, but we cut python out of the equation entirely.
+[The third approach](https://github.com/GitWasAMistakeItsNothingButTrash/whisper/tree/approach3) is the same as the second, but python is cut out of the equation entirely.
