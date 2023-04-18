@@ -1,7 +1,7 @@
-[OpenAI's Whisper](https://github.com/openai/whisper) a lot better at transcribing speech to text than at translating text, whereas [Google Translate](https://translate.google.com/) is a lot better at translating text than at transcribing speech to text.
+[OpenAI's Whisper](https://github.com/openai/whisper) is a lot better at transcribing speech to text than at translating text, whereas [Google Translate](https://translate.google.com/) is a lot better at translating text than at transcribing speech to text.
 So, ideally one would use Whisper to get a transcription and plug that into Google Translate.
 
-In practice, however, it's a little more complicated, because the size of the chunks into which Whisper breaks audio down for transcription seldom correspond to sentences.
+In practice, however, it's a little more complicated, because the chunks into which Whisper breaks audio down for transcription seldom correspond to sentences.
 The transcript of each chunk is (with greater or lesser success) aligned to its audio using timestamps.
 Whisper's output is therefore a mess of partial sentences interspersed with timestamps.
 Passing that to Google Translate, will result an attempt to translate each partial sentence (i.e. each audio chunk) as a standalone sentence, with often disastrous consequences for the translation's coherence and accuracy.
